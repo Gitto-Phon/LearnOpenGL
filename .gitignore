@@ -1,10 +1,12 @@
 # Visual Studio 缓存文件夹
 .vs/
 
-# 编译输出目录（Debug / Release 等）
+# 编译文件夹（忽略）
 x64/
 Debug/
 Release/
+
+# 编译输出目录（Debug / Release 等）
 Win32/
 *.exe
 *.dll
@@ -14,8 +16,13 @@ Win32/
 *.ilk
 *.exp
 
-# IDE 用户配置
+# 资源缓存（必须忽略）
+*.aps
+
+# 用户配置和筛选器（忽略）
 *.user
+*.filters
+
 *.suo
 *.sdf
 *.opensdf

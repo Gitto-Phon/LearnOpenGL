@@ -67,7 +67,7 @@ public:
 	}
 	void useFBO()
 	{
-		glBindFramebuffer();
+		glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 	}
 	void useDiffuseFbo()
 	{

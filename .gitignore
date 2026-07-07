@@ -1,0 +1,38 @@
+# Visual Studio 缓存文件夹
+.vs/
+
+# 编译输出目录（Debug / Release 等）
+x64/
+Debug/
+Release/
+Win32/
+*.exe
+*.dll
+*.lib
+*.obj
+*.pdb
+*.ilk
+*.exp
+
+# IDE 用户配置
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.opendb
+*.VC.db
+
+# 临时文件
+*.tmp
+*.log
+*.cache
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 如果你用 CMake 生成的临时文件夹（可选）
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake

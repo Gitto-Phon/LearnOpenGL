@@ -1,10 +1,8 @@
-#pragma once
+#include "DebugUI.h"
 
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_impl_opengl3.h"
-
-//初始化参数
+// ===================================================
+// 全局变量定义（原 UI.h 中的定义移到这里）
+// ===================================================
 glm::vec3 backGroundColor = glm::vec3(0.1f, 0.1f, 0.1f);//背景颜色
 
 //模型变换
@@ -14,33 +12,13 @@ glm::vec3 modelScale = glm::vec3(1.0f);
 glm::vec3 lightPos(1.2, 1.0, 2.0);      //灯光位置
 glm::vec3 lightColor(1.0, 1.0, 1.0);    //灯光颜色
 float lightRange = 3.0;                 //灯光范围
-struct dirLight
-{
-    glm::vec3 direction = glm::vec3(0.2f, -0.325f, -0.3f);
-    glm::vec3 ambient = glm::vec3(0.1f, 0.1f, 0.1f);
-    glm::vec3 diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
-    glm::vec3 specular = glm::vec3(0.5f, 0.5f, 0.5f);
-};
-
-struct pointLight
-{
-    glm::vec3 position = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 direction = glm::vec3(-0.2f, -1.0f, -0.3f);
-    glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f);
-    glm::vec3 diffuse = glm::vec3(0.4f, 0.4f, 0.4f);
-    glm::vec3 specular = glm::vec3(0.5f, 0.5f, 0.5f);
-    float constant = 1.0f;
-    float linear = 0.09f;
-    float quadratic = 0.032f;
-};
-
-struct spotLight
-{
-
-};
 
 dirLight dirLight_0;
 pointLight pointLight_0;
+
+// ===================================================
+// App 命名空间实现
+// ===================================================
 namespace App
 {
     //选中结果
@@ -126,3 +104,24 @@ namespace App
 
     }
 }
+
+// ===================================================
+// DebugUI - ImGui 调试面板
+// ===================================================
+
+namespace DebugUI
+{
+
+void Init()
+{
+    // UI 状态已在全局变量中初始化
+    // 此处无需额外初始化
+}
+
+void Draw()
+{
+    // 调用 App::RenderUI()（保持原 ImGui 代码不变）
+    App::RenderUI();
+}
+
+} // namespace DebugUI

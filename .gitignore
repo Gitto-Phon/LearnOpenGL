@@ -1,12 +1,19 @@
-# Visual Studio 缓存文件夹
+# ============ Visual Studio 缓存 ============
 .vs/
+*.suo
+*.sdf
+*.opensdf
+*.opendb
+*.VC.db
 
-# 编译文件夹（忽略）
+# ============ VS 项目用户/筛选器文件 ============
+*.vcxproj.user
+*.vcxproj.filters
+
+# ============ 编译输出 ============
 x64/
 Debug/
 Release/
-
-# 编译输出目录（Debug / Release 等）
 Win32/
 *.exe
 *.dll
@@ -16,30 +23,25 @@ Win32/
 *.ilk
 *.exp
 
-# 资源缓存（必须忽略）
-*.aps
-
-# 用户配置和筛选器（忽略）
-*.user
-*.filters
-
-*.suo
-*.sdf
-*.opensdf
-*.opendb
-*.VC.db
-
-# 临时文件
-*.tmp
-*.log
-*.cache
-
-# 系统文件
-.DS_Store
-Thumbs.db
-
-# 如果你用 CMake 生成的临时文件夹（可选）
+# ============ CMake 构建输出 ============
+build/
 CMakeFiles/
 CMakeCache.txt
 Makefile
 cmake_install.cmake
+compile_commands.json
+
+# ============ 资源缓存 ============
+*.aps
+
+# ============ ImGui 运行时配置 ============
+imgui.ini
+
+# ============ 临时文件 ============
+*.tmp
+*.log
+*.cache
+
+# ============ 系统文件 ============
+.DS_Store
+Thumbs.db

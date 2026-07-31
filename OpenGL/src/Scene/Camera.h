@@ -1,10 +1,19 @@
 #pragma once
 
-//´°¿Ú³ß´ç
+// Camera.h - æ‘„åƒæœº
+// ä»åŸ src/camera.h ç§»å…¥
+// èŒè´£ï¼šFPS æ‘„åƒæœºæ§åˆ¶ï¼ˆWASD + é¼ æ ‡ + æ»šè½®ï¼‰ï¼Œæä¾› view/projection çŸ©é˜µ
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+//çª—å£å°ºå¯¸
 const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
 
-//Ïà»úÒÆ¶¯·½Ïò
+//ç›¸æœºç§»åŠ¨æ–¹å‘
 enum Camera_Movement
 {
     FORWARD,
@@ -15,32 +24,32 @@ enum Camera_Movement
     DOWN
 };
 
-//ÉèÖÃÏà»úÄ¬ÈÏÖµ
+//è®¾ç½®ç›¸æœºé»˜è®¤å€¼
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
 const float SPEED = 2.5f;
 const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
-//½üÆ½Ãæ¡¢Ô¶Æ½Ãæ
+//è¿‘å¹³é¢ã€è¿œå¹³é¢
 const float nearPlan = 0.1f;
 const float farPlan = 100.0f;
 
 class Camera
 {
 public:
-    //Ïà»úÊôĞÔ
-    glm::vec3 cameraPos;//ÉãÏñ»úÎ»ÖÃ
-    glm::vec3 cameraFront;//ÉãÏñ»úÏòÇ°ÏòÁ¿
-    glm::vec3 cameraRight;//ÉãÏñ»úÏòÓÒÏòÁ¿
-    glm::vec3 cameraUp;//ÉãÏñ»úÏòÉÏÏòÁ¿
-    glm::vec3 worldUp;//ÊÀ½ç¿Õ¼äÏòÉÏÏòÁ¿
-    //Å·À­½Ç
+    //ç›¸æœºå±æ€§
+    glm::vec3 cameraPos;//æ‘„åƒæœºä½ç½®
+    glm::vec3 cameraFront;//æ‘„åƒæœºå‘å‰å‘é‡
+    glm::vec3 cameraRight;//æ‘„åƒæœºå‘å³å‘é‡
+    glm::vec3 cameraUp;//æ‘„åƒæœºå‘ä¸Šå‘é‡
+    glm::vec3 worldUp;//ä¸–ç•Œç©ºé—´å‘ä¸Šå‘é‡
+    //æ¬§æ‹‰è§’
     float Yaw;
     float Pitch;
-    //Ïà»úÑ¡Ïî
-    float zoom;         //Ïà»úÍÆÀ­
-    float movementSpeed;//ÒÆ¶¯ËÙ¶È
-    float mouseSensitivity;//Êó±êÁéÃô¶È
+    //ç›¸æœºé€‰é¡¹
+    float zoom;         //ç›¸æœºæ¨æ‹‰
+    float movementSpeed;//ç§»åŠ¨é€Ÿåº¦
+    float mouseSensitivity;//é¼ æ ‡çµæ•åº¦
 
     //Camera(zoom, movementSpeed, mouseSensitivity, cameraPos)
     Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : cameraFront(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM)
@@ -51,17 +60,17 @@ public:
         Pitch = pitch;
         updateCameraVector();
     }
-    //´°¿Ú¼àÌı
+    //çª—å£ç›‘å¬
     void frambuffer_size_callback(int width, int height)
     {
-        glViewport(0, 0, width, height);//Ç°Á½¸ö¿ØÖÆ×óÏÂ½Ç,ºóÁ½¸öÓÒÉÏ½Ç(ÏñËØ)
+        glViewport(0, 0, width, height);//å‰ä¸¤ä¸ªæ§åˆ¶å·¦ä¸‹è§’,åä¸¤ä¸ªå³ä¸Šè§’(åƒç´ )
     }
-    //Êó±ê¼àÌı
+    //é¼ æ ‡ç›‘å¬
     void mouse_callback(double xposIn, double yposIn)
     {
         float xPos = static_cast<float>(xposIn);
         float yPos = static_cast<float>(yposIn);
-        if (firstMouse)//³õÊ¼»¯
+        if (firstMouse)//åˆå§‹åŒ–
         {
             lastX = xPos;
             lastY = yPos;
@@ -73,15 +82,15 @@ public:
         lastY = yPos;
 
         xoffset *= mouseSensitivity;
-        yoffset *= mouseSensitivity;//Êó±êÆ«ÒÆÁ¿
+        yoffset *= mouseSensitivity;//é¼ æ ‡åç§»é‡
         Yaw += xoffset;
         Pitch += yoffset;
         if (Pitch > 89.0f) Pitch = 89.0f;
-        if (Pitch < -89.0f) Pitch = -89.0f;//¸©Ñö½ÇÏŞÖÆ
+        if (Pitch < -89.0f) Pitch = -89.0f;//ä¿¯ä»°è§’é™åˆ¶
 
         updateCameraVector();
     }
-    //Êó±ê¹öÂÖ¡ª¡ª¸Ä±äzoom
+    //é¼ æ ‡æ»šè½®â€”â€”æ”¹å˜zoom
     void scroll_callback(double yposIn)
     {
         float yPos = static_cast<float>(yposIn);
@@ -89,12 +98,12 @@ public:
         if (zoom < 1) zoom = 1;
         if (zoom > 90) zoom = 90;
     }
-    //¼üÅÌÊäÈë
+    //é”®ç›˜è¾“å…¥
     void processInput(GLFWwindow* window, float deltaTime)
     {
-        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)//ÅĞ¶ÏÊÇ·ñ°´ÏÂesc¼ü
+        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)//åˆ¤æ–­æ˜¯å¦æŒ‰ä¸‹escé”®
         {
-            glfwSetWindowShouldClose(window, true);//¹Ø±Õglfw
+            glfwSetWindowShouldClose(window, true);//å…³é—­glfw
         }
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         {
@@ -130,7 +139,7 @@ public:
         //}
     }
 
-    //¹Û²ì¾ØÕó  ÊÀ½çµ½¹Û²ì
+    //è§‚å¯ŸçŸ©é˜µ  ä¸–ç•Œåˆ°è§‚å¯Ÿ
     glm::mat4 getViewMat()
     {
         //return glm::lookAt(cameraPos, cameraPos + cameraFront, worldUp);
@@ -157,13 +166,13 @@ public:
         mat = glm::mat4(rDir, uDir, fDir, glm::vec4(0,0,0,1));
         return glm::transpose(mat);
     }
-    //---------------------------------Í¶Ó°¾ØÕó--¹Û²ìµ½²Ã¼ô--ÕıÉäÍ¶Ó°¡¢Í¸ÊÓÍ¶Ó°
-    //Í¸ÊÓÍ¶Ó°
+    //---------------------------------æŠ•å½±çŸ©é˜µ--è§‚å¯Ÿåˆ°è£å‰ª--æ­£å°„æŠ•å½±ã€é€è§†æŠ•å½±
+    //é€è§†æŠ•å½±
     glm::mat4 getProjectionMat() const
     {
         return glm::perspective(glm::radians(zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, nearPlan, farPlan);
     }
-    //ÕıÉäÍ¶Ó°
+    //æ­£å°„æŠ•å½±
     glm::mat4 getOrthoMat()
     {
         return glm::ortho(0.0f, 800.0f, 0.0f, 600.0f, 0.1f, 100.0f);
@@ -171,7 +180,7 @@ public:
 
 private:
 
-    //Êó±ê
+    //é¼ æ ‡
     //float lastX;
     //float lastY;
     int count = 0;
@@ -193,7 +202,7 @@ private:
 
     void updateCameraVector()
     {
-        glm::vec3 front(1);//¼ÆËã×îÖÕ·½ÏòÏòÁ¿
+        glm::vec3 front(1);//è®¡ç®—æœ€ç»ˆæ–¹å‘å‘é‡
         front.x = cos(glm::radians(Pitch)) * cos(glm::radians(Yaw));
         front.y = sin(glm::radians(Pitch));
         front.z = cos(glm::radians(Pitch)) * sin(glm::radians(Yaw));

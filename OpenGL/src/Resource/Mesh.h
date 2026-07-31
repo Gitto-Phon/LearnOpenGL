@@ -1,66 +1,72 @@
 #pragma once
+
+// ===================================================
+// Mesh - ç½‘æ ¼ç±»ï¼ˆAssimp å­ç½‘æ ¼ï¼‰
+// å°è£…æ¥è‡ª mesh.h çš„ Mesh ç±»
+// ===================================================
+
 #include <vector>
 #include <string>
 #include "Shader/shader.h"
 
-//¶¨Òå¶¥µãÊı¾İ½á¹¹Ìå£¨°üº¬¶¥µãÎ»ÖÃ£¬·¨Ïß£¬uv×ø±ê£©
+//å®šä¹‰é¡¶ç‚¹æ•°æ®ç»“æ„ä½“ï¼ˆåŒ…å«é¡¶ç‚¹ä½ç½®ï¼Œæ³•çº¿ï¼Œuvåæ ‡ï¼‰
 struct Vertex {
     glm::vec3 Position;
     glm::vec3 Normal;
     glm::vec2 TexCoords;
 };
 
-//¶¨ÒåÌùÍ¼Êı¾İ½á¹¹Ìå£¨ÌùÍ¼id£¬ÌùÍ¼ÀàĞÍ£©
+//å®šä¹‰è´´å›¾æ•°æ®ç»“æ„ä½“ï¼ˆè´´å›¾idï¼Œè´´å›¾ç±»å‹ï¼‰
 struct Texture {
     unsigned int id = 0;
     std::string type;
-    std::string path;//´¢´æÎÆÀíÂ·¾¶ÓëÆäËûÎÆÀí¶Ô±È
+    std::string path;//å‚¨å­˜çº¹ç†è·¯å¾„ä¸å…¶ä»–çº¹ç†å¯¹æ¯”
 };
 
-//¶¨ÒåÍø¸ñÊı¾İÀà
+//å®šä¹‰ç½‘æ ¼æ•°æ®ç±»
 class Mesh {
 public:
-    //Íø¸ñÊı¾İ
+    //ç½‘æ ¼æ•°æ®
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
     std::vector<Texture> textures;
-    //¹¹Ôìº¯Êı£¨½«ËùÓĞ±ØĞëµÄÊı¾İ¸³ÓèÍø¸ñ£©
+    //æ„é€ å‡½æ•°ï¼ˆå°†æ‰€æœ‰å¿…é¡»çš„æ•°æ®èµ‹äºˆç½‘æ ¼ï¼‰
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,std::vector<Texture> textures) {
-        this->vertices = vertices;//MeshµÄĞÎ²Î¸³Óè¹«ÓĞ±äÁ¿
+        this->vertices = vertices;//Meshçš„å½¢å‚èµ‹äºˆå…¬æœ‰å˜é‡
         this->indices = indices;
         this->textures = textures;
-        //³õÊ¼»¯»º³å£¨VAO,VBO,VEO£©
+        //åˆå§‹åŒ–ç¼“å†²ï¼ˆVAO,VBO,VEOï¼‰
         setupMesh();
     }
-    //»æÖÆÍø¸ñ
+    //ç»˜åˆ¶ç½‘æ ¼
     void Draw(Shader shader) {
-        unsigned int diffuseNr = 1;//Âş·´ÉäÌùÍ¼Êı
-        unsigned int specularNr = 1;//¾µÃæ·´ÉäÌùÍ¼Êı
+        unsigned int diffuseNr = 1;//æ¼«åå°„è´´å›¾æ•°
+        unsigned int specularNr = 1;//é•œé¢åå°„è´´å›¾æ•°
         for (unsigned int i = 0; i < textures.size(); i++) {
-            glActiveTexture(GL_TEXTURE0 + i);//ÔÚ°ó¶¨Ö®Ç°¼¤»îÏàÓ¦µÄÎÆÀíµ¥Ôª
-            //»ñÈ¡ÎÆÀíĞòºÅ£¨diffuse_textureNÖĞµÄN£©
+            glActiveTexture(GL_TEXTURE0 + i);//åœ¨ç»‘å®šä¹‹å‰æ¿€æ´»ç›¸åº”çš„çº¹ç†å•å…ƒ
+            //è·å–çº¹ç†åºå·ï¼ˆdiffuse_textureNä¸­çš„Nï¼‰
             std::string number;
-            std::string name = textures[i].type;//»ñÈ¡ÌùÍ¼ÀàĞÍ
-            //È·¶¨ÌùÍ¼ÊıÁ¿£¬½«NÆ´½Óµ½ÎÆÀíÀàĞÍºó£¬»ñÈ¡¶ÔÓ¦µÄuniformÃû³Æ
+            std::string name = textures[i].type;//è·å–è´´å›¾ç±»å‹
+            //ç¡®å®šè´´å›¾æ•°é‡ï¼Œå°†Næ‹¼æ¥åˆ°çº¹ç†ç±»å‹åï¼Œè·å–å¯¹åº”çš„uniformåç§°
             if (name == "texture_diffuse") {
                 number = std::to_string(diffuseNr++);
             }
             else if (name == "texture_specular") {
                 number = std::to_string(specularNr++);
             }
-            //ÉèÖÃ²ÉÑùÆ÷µÄÎ»ÖÃÖµÎªµ±Ç°¼¤»îµÄÎÆÀíµ¥Ôª
+            //è®¾ç½®é‡‡æ ·å™¨çš„ä½ç½®å€¼ä¸ºå½“å‰æ¿€æ´»çš„çº¹ç†å•å…ƒ
             shader.setInt(("material." + name + number).c_str(), i);
-            glBindTexture(GL_TEXTURE_2D, textures[i].id);//°ó¶¨µ±Ç°ÎÆÀí
+            glBindTexture(GL_TEXTURE_2D, textures[i].id);//ç»‘å®šå½“å‰çº¹ç†
         }
         glActiveTexture(GL_TEXTURE0);
 
-        //»æÖÆÍø¸ñ
+        //ç»˜åˆ¶ç½‘æ ¼
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     }
 
-    //ÇåÀí»º´æ
+    //æ¸…ç†ç¼“å­˜
     void deleteBuffer()const
     {
         glDeleteVertexArrays(1, &VAO);
@@ -68,30 +74,30 @@ public:
         glDeleteBuffers(1, &EBO);
     }
 private:
-    //äÖÈ¾Êı¾İ
+    //æ¸²æŸ“æ•°æ®
     unsigned int VAO, VBO, EBO;
-    //³õÊ¼»¯º¯Êı
+    //åˆå§‹åŒ–å‡½æ•°
     void setupMesh() {
-        //´´½¨¶¥µãÊı×é¶ÔÏó(VAO)//¶¥µã»º³å¶ÔÏó(VBO)//ÔªËØ£¨Ë÷Òı£©»º³å¶ÔÏó(EBO)
+        //åˆ›å»ºé¡¶ç‚¹æ•°ç»„å¯¹è±¡(VAO)//é¡¶ç‚¹ç¼“å†²å¯¹è±¡(VBO)//å…ƒç´ ï¼ˆç´¢å¼•ï¼‰ç¼“å†²å¯¹è±¡(EBO)
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
         glGenBuffers(1, &EBO);
 
-        glBindVertexArray(VAO);//IDË÷Òı//Ò»µ©´´½¨»º³åÇøºó,¾ÍÒªÑ¡ÔñÄÇ¸ö»º³åÇø(°ó¶¨)
+        glBindVertexArray(VAO);//IDç´¢å¼•//ä¸€æ—¦åˆ›å»ºç¼“å†²åŒºå,å°±è¦é€‰æ‹©é‚£ä¸ªç¼“å†²åŒº(ç»‘å®š)
 
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        //°ÑÓÃ»§¶¨ÒåµÄÊı¾İ¸´ÖÆµ½ÏÔ´æ»º³åÇøµÄº¯Êı
+        //æŠŠç”¨æˆ·å®šä¹‰çš„æ•°æ®å¤åˆ¶åˆ°æ˜¾å­˜ç¼“å†²åŒºçš„å‡½æ•°
         glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-        //vertices.size() * sizeof(Vertex)Ó¦¸ÃÊÇ32¸ö×Ö½Ú£¬8¸öfloat * Ã¿¸ö4×Ö½Ú
+        //vertices.size() * sizeof(Vertex)åº”è¯¥æ˜¯32ä¸ªå­—èŠ‚ï¼Œ8ä¸ªfloat * æ¯ä¸ª4å­—èŠ‚
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
         //Position
-        glEnableVertexAttribArray(0);//ÆôÓÃ¶¥µãÊôĞÔ
+        glEnableVertexAttribArray(0);//å¯ç”¨é¡¶ç‚¹å±æ€§
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
         //Normal
         glEnableVertexAttribArray(1);
-        //offsetof(s,m)£¬µÚÒ»¸öÊÇ½á¹¹Ìå£¬µÚ¶ş¸ö²ÎÊıÊÇÕâ¸ö½á¹¹ÌåÖĞµÄ±äÁ¿Ãû£¬Õâ¸öºê»á·µ»Ø¸Ã±äÁ¿¾à½á¹¹ÌåÍ·²¿µÄ×Ö½ÚÆ«ÒÆÁ¿
+        //offsetof(s,m)ï¼Œç¬¬ä¸€ä¸ªæ˜¯ç»“æ„ä½“ï¼Œç¬¬äºŒä¸ªå‚æ•°æ˜¯è¿™ä¸ªç»“æ„ä½“ä¸­çš„å˜é‡åï¼Œè¿™ä¸ªå®ä¼šè¿”å›è¯¥å˜é‡è·ç»“æ„ä½“å¤´éƒ¨çš„å­—èŠ‚åç§»é‡
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
         //TexCoords
         glEnableVertexAttribArray(2);

@@ -2,40 +2,48 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+// ===================================================
+// VertexArray - é¡¶ç‚¹æ•°ç»„åŒ…è£…å™¨
+// å°è£…é¡¶ç‚¹æ•°æ®ç±» Vertexs
+// æ”¯æŒï¼šæ„é€ å‡½æ•°(é¡¶ç‚¹æ•°æ®, å­—èŠ‚å¤§å°, é¡¶ç‚¹æ’å¸ƒæ•°ç»„, å±æ€§æ•°é‡)
+//        useVAO() ç»‘å®šé¡¶ç‚¹æ•°ç»„å¯¹è±¡
+//        deleteBuffer() æ¸…ç†ç¼“å†²
+// ===================================================
+
 class Vertexs
 {
 public:
-    //¶¥µãÊı×é£¬ ¶¥µãÊı×é´óĞ¡£¬ Ë÷Òı£¨ÃæID£©Êı×é£¬ Ë÷Òı£¨ÃæID£©Êı×é´óĞ¡, ÊôĞÔ³¤¶ÈÊı×é£¬ ÊôĞÔÊı×é´óĞ¡
+    //é¡¶ç‚¹æ•°ç»„ï¼Œ é¡¶ç‚¹æ•°ç»„å¤§å°ï¼Œ ç´¢å¼•ï¼ˆé¢IDï¼‰æ•°ç»„ï¼Œ ç´¢å¼•ï¼ˆé¢IDï¼‰æ•°ç»„å¤§å°, å±æ€§é•¿åº¦æ•°ç»„ï¼Œ å±æ€§æ•°ç»„å¤§å°
     Vertexs(float vertices[],int verSize, unsigned int indices[], int indSize, unsigned int prop[], int propSize)
     {
-        //´´½¨¶¥µãÊı×é¶ÔÏó(VAO)//¶¥µã»º³å¶ÔÏó(VBO)//ÔªËØ£¨Ë÷Òı£©»º³å¶ÔÏó(EBO)
+        //åˆ›å»ºé¡¶ç‚¹æ•°ç»„å¯¹è±¡(VAO)//é¡¶ç‚¹ç¼“å†²å¯¹è±¡(VBO)//å…ƒç´ ï¼ˆç´¢å¼•ï¼‰ç¼“å†²å¯¹è±¡(EBO)
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
         glGenBuffers(1, &EBO);
 
-        glBindVertexArray(VAO);//IDË÷Òı//Ò»µ©´´½¨»º³åÇøºó,¾ÍÒªÑ¡ÔñÄÇ¸ö»º³åÇø(°ó¶¨)
+        glBindVertexArray(VAO);//IDç´¢å¼•//ä¸€æ—¦åˆ›å»ºç¼“å†²åŒºå,å°±è¦é€‰æ‹©é‚£ä¸ªç¼“å†²åŒº(ç»‘å®š)
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        //°ÑÓÃ»§¶¨ÒåµÄÊı¾İ¸´ÖÆµ½ÏÔ´æ»º³åÇøµÄº¯Êı
+        //æŠŠç”¨æˆ·å®šä¹‰çš„æ•°æ®å¤åˆ¶åˆ°æ˜¾å­˜ç¼“å†²åŒºçš„å‡½æ•°
         glBufferData(GL_ARRAY_BUFFER, verSize, vertices, GL_STATIC_DRAW);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indSize, indices, GL_STATIC_DRAW);
         setProperty(prop, propSize);
     }
     Vertexs(float vertices[], int verSize, unsigned int prop[], int propSize)
     {
-        //´´½¨¶¥µãÊı×é¶ÔÏó(VAO)//¶¥µã»º³å¶ÔÏó(VBO)//ÔªËØ£¨Ë÷Òı£©»º³å¶ÔÏó(EBO)
+        //åˆ›å»ºé¡¶ç‚¹æ•°ç»„å¯¹è±¡(VAO)//é¡¶ç‚¹ç¼“å†²å¯¹è±¡(VBO)//å…ƒç´ ï¼ˆç´¢å¼•ï¼‰ç¼“å†²å¯¹è±¡(EBO)
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
 
-        glBindVertexArray(VAO);//IDË÷Òı//Ò»µ©´´½¨»º³åÇøºó,¾ÍÒªÑ¡ÔñÄÇ¸ö»º³åÇø(°ó¶¨)
+        glBindVertexArray(VAO);//IDç´¢å¼•//ä¸€æ—¦åˆ›å»ºç¼“å†²åŒºå,å°±è¦é€‰æ‹©é‚£ä¸ªç¼“å†²åŒº(ç»‘å®š)
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        //°ÑÓÃ»§¶¨ÒåµÄÊı¾İ¸´ÖÆµ½ÏÔ´æ»º³åÇøµÄº¯Êı
+        //æŠŠç”¨æˆ·å®šä¹‰çš„æ•°æ®å¤åˆ¶åˆ°æ˜¾å­˜ç¼“å†²åŒºçš„å‡½æ•°
         glBufferData(GL_ARRAY_BUFFER, verSize, vertices, GL_STATIC_DRAW);
         setProperty(prop, propSize);
         //glBindVertexArray(0);
     }
-    //ÉèÖÃ¶¥µãÊôĞÔÖ¸Õë
-    //ÊôĞÔ³¤¶ÈÊı×é£¬ ÊôĞÔÊı×é´óĞ¡
+    //è®¾ç½®é¡¶ç‚¹å±æ€§æŒ‡é’ˆ
+    //å±æ€§é•¿åº¦æ•°ç»„ï¼Œ å±æ€§æ•°ç»„å¤§å°
     void setProperty(unsigned int prop[], int propSize)
     {
         int vSize = 0;
@@ -45,16 +53,16 @@ public:
         {
             if (i > 0)  posiP += prop[i - 1];
             glVertexAttribPointer(i, prop[i], GL_FLOAT, GL_FALSE, vSize * sizeof(float), (void*)(posiP * sizeof(float)));
-            glEnableVertexAttribArray(i);//ÆôÓÃ¶¥µãÊôĞÔ
+            glEnableVertexAttribArray(i);//å¯ç”¨é¡¶ç‚¹å±æ€§
         }
     }
-    //°ó¶¨VAO
+    //ç»‘å®šVAO
     void useVAO()const
     {
         glBindVertexArray(VAO);
     }
 
-    //ÇåÀí»º´æ
+    //æ¸…ç†ç¼“å­˜
     void deleteBuffer()const
     {
         glDeleteVertexArrays(1, &VAO);
@@ -65,3 +73,6 @@ private:
     unsigned int EBO;
     unsigned int VAO, VBO;
 };
+
+// VertexArray ç›´æ¥ä½¿ç”¨ Vertexs åˆ«å
+using VertexArray = Vertexs;

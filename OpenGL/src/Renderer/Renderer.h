@@ -5,8 +5,9 @@
 #include <map>
 
 class Scene;
-class Shader;
-class Vertexs;
+
+#include "Resource/Shader.h"
+#include "Resource/VertexArray.h"
 
 // forward declarations for render passes
 class StencilPass;

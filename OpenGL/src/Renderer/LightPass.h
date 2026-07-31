@@ -2,9 +2,8 @@
 
 #include <glm/glm.hpp>
 #include "Renderer/RenderPass.h"
-
-class Shader;
-class Vertexs;
+#include "Resource/Shader.h"
+#include "Resource/VertexArray.h"
 
 // ===================================================
 // 【Step03.4】LightPass - 灯光立方体渲染通道

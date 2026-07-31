@@ -6,8 +6,9 @@
 #include <vector>
 #include <map>
 
-class Shader;
-class Vertexs;
+#include "Resource/Shader.h"
+#include "Resource/VertexArray.h"
+
 class Camera;
 
 // ===================================================

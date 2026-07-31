@@ -2,10 +2,8 @@
 
 #include <glm/glm.hpp>
 #include "Renderer/RenderPass.h"
-
-// forward declarations
-class Shader;
-class Vertexs;
+#include "Resource/Shader.h"
+#include "Resource/VertexArray.h"
 
 // ===================================================
 // 【Step03.2】StencilPass - 模板测试描边渲染通道

@@ -2,9 +2,9 @@
 
 #include <glm/glm.hpp>
 #include "Renderer/RenderPass.h"
+#include "Resource/Shader.h"
+#include "Resource/VertexArray.h"
 
-class Shader;
-class Vertexs;
 class Model;
 
 // ===================================================

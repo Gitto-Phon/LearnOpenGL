@@ -1,3 +1,14 @@
+// ===================================================
+// 【Step03】Renderer.cpp - 渲染器实现
+// 职责：每帧被 Application::Run() 调用，编排 4 个渲染通道
+// 执行顺序：
+//   Step03.0  清屏（颜色/深度/模板缓冲）+ 计算 MVP 矩阵
+//   Step03.1  m_modelPass->Execute()    ← 模型+光照渲染（当前注释状态）
+//   Step03.2  m_stencilPass->Execute()  ← 地板 + 立方体 + 模板描边
+//   Step03.3  m_alphaPass->Execute()    ← Alpha 混合/透明度排序渲染（当前注释状态）
+//   Step03.4  m_lightPass->Execute()    ← 点光源方块渲染（当前注释状态）
+// ===================================================
+
 #include "Renderer.h"
 
 #include <glad/glad.h>

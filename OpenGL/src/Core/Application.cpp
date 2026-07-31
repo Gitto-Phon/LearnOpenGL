@@ -15,6 +15,15 @@
 #include "UI/DebugUI.h"
 
 // ===================================================
+// 【Step02】Application.cpp - 应用程序主类实现
+// 职责：管理窗口创建、资源加载、渲染循环、资源清理
+//      是 main() 和所有子模块之间的桥梁
+// 执行顺序：
+//   Step02.1  InitWindow()       ← 创建 GLFW 窗口 + GLAD + OpenGL 状态 + ImGui
+//   Step02.2  InitResources()    ← 编译着色器 + 创建 VAO + 加载贴图 + 初始化 UI
+//   Step02.3  Run()              ← 主渲染循环（每帧：输入→渲染→UI→交换缓冲）
+//   Step02.4  CleanupResources() ← 清理 VAO/着色器/ImGui/GLFW
+// ===================================================
 // 静态成员
 // ===================================================
 Application* Application::s_instance = nullptr;
@@ -62,7 +71,12 @@ void Application::ScrollCallback(GLFWwindow* window, double xposIn, double yposI
 }
 
 // ===================================================
-// 创建渲染窗口（从原 Application.h 的 glInit 函数迁移）
+// Step02.1: InitWindow - 创建渲染窗口 + OpenGL 环境
+// 1. glfwInit() + glfwCreateWindow() → 创建 1920×1080 窗口
+// 2. gladLoadGLLoader() → 加载 OpenGL 4.6 函数
+// 3. glEnable(DEPTH_TEST | STENCIL_TEST) → 开启深度/模板测试
+// 4. glfwSet*Callback() → 注册鼠标/滚轮/窗口大小回调
+// 5. InitImGui() → 初始化 ImGui（上下文 + 字体 + GLFW/OpenGL3 后端）
 // ===================================================
 GLFWwindow* Application::InitWindow(int screenWidth, int screenHeight, const char* title)
 {
@@ -129,7 +143,7 @@ GLFWwindow* Application::InitWindow(int screenWidth, int screenHeight, const cha
 }
 
 // ===================================================
-// 初始化 ImGui
+// Step02.1 子步骤: 初始化 ImGui（上下文 + 字体 + 后端绑定）
 // ===================================================
 void Application::InitImGui(GLFWwindow* window)
 {
@@ -163,8 +177,11 @@ void Application::InitImGui(GLFWwindow* window)
 }
 
 // ===================================================
-// 初始化渲染资源（着色器、顶点对象、贴图）
-// 从原 Application.cpp 的 main() 初始化部分迁移
+// Step02.2: InitResources - 加载渲染资源
+// 1. 编译链接 7 组着色器程序（model/light/lightMesh/depth/stencil/alpha/rt）
+// 2. 创建 3 个 VAO 几何体（立方体 cubeV / 平面 planV / 透明窗户 alphaV）
+// 3. 加载 3 张贴图（墙壁 wall.jpg / 地板 container.jpg / 窗户透明度 blending_transparent_window.png）
+// 4. DebugUI::Init() → 初始化 UI 全局状态
 // ===================================================
 void Application::InitResources()
 {
@@ -226,7 +243,11 @@ void Application::InitResources()
 }
 
 // ===================================================
-// 每帧渲染 ImGui
+// Step02.3d: RenderImGui - 每帧绘制 ImGui 调试面板
+// 1. glfwPollEvents() → 检查事件、更新窗口状态
+// 2. ImGui::NewFrame() → 开始新帧
+// 3. DebugUI::Draw() → 跳转 Step04 绘制调试窗口
+// 4. ImGui::Render() + ImGui_ImplOpenGL3_RenderDrawData() → 提交渲染数据
 // ===================================================
 void Application::RenderImGui()
 {
@@ -246,7 +267,13 @@ void Application::RenderImGui()
 }
 
 // ===================================================
-// 主循环（从原 Application.cpp 的 main() 渲染循环迁移）
+// Step02.3: Run - 主渲染循环
+// 每帧执行：
+//   Step02.3a  计算 deltaTime（帧时间差）
+//   Step02.3b  scene.camera.processInput()  ← 处理 WASD 键盘输入（移动摄像机）
+//   Step02.3c  renderer.Render()            ← 跳转 Step03 - 多通道渲染管线
+//   Step02.3d  RenderImGui()                ← 跳转 Step04 - 绘制 ImGui 调试面板
+//   Step02.3e  glfwSwapBuffers()            ← 交换前后缓冲区
 // ===================================================
 void Application::Run()
 {
@@ -290,7 +317,8 @@ void Application::Run()
 }
 
 // ===================================================
-// 清理资源（从原 Application.cpp 的 main() 末尾迁移）
+// Step02.4: CleanupResources - 清理所有资源
+// 按创建顺序逆序释放：VAO → 着色器程序 → ImGui → GLFW 窗口
 // ===================================================
 void Application::CleanupResources()
 {

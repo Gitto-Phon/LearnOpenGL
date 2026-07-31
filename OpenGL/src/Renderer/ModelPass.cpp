@@ -1,5 +1,13 @@
 #include "ModelPass.h"
 
+// ===================================================
+// 【Step03.1】ModelPass.cpp - 模型+光照渲染通道实现
+// 职责：渲染 3D 模型（立方体 + 灯光方块）
+// 执行子步骤：
+//   Step03.1a  绘制立方体（模型着色器 + 光照计算）
+//   Step03.1b  绘制灯光方块（灯光模型着色器）
+// ===================================================
+
 #include <glad/glad.h>
 #include "Shader/shader.h"
 #include "Resource/VertexArray.h"

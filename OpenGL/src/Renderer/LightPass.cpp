@@ -1,5 +1,12 @@
 #include "LightPass.h"
 
+// ===================================================
+// 【Step03.4】LightPass.cpp - 灯光立方体渲染通道实现
+// 职责：绘制点光源方块（可视化光源位置）
+// 执行：
+//   Step03.4  对每个点光源位置，绘制一个小立方体代表光源
+// ===================================================
+
 #include <glad/glad.h>
 #include "Shader/shader.h"
 #include "Resource/VertexArray.h"

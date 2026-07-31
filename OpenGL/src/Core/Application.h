@@ -9,9 +9,17 @@
 #include "Resource/VertexArray.h"
 
 // ===================================================
-// Application - 应用程序主类
-// 从原 Application.cpp + Application.h 合并迁移
-// 管理窗口创建、资源加载、渲染循环、清理
+// 【Step02】应用程序主类 - Application.h
+// 职责：管理窗口创建、资源加载、渲染循环、资源清理
+//       是 main() 和所有子模块之间的桥梁
+// 公开接口（按调用顺序）：
+//   Step02.1  InitWindow()       ← 创建 GLFW 窗口 + GLAD + OpenGL 状态 + ImGui
+//   Step02.2  InitResources()    ← 编译着色器 + 创建 VAO + 加载贴图 + 初始化 UI
+//   Step02.3  Run()              ← 主渲染循环（每帧：输入→渲染→UI→交换缓冲）
+//   Step02.4  ~Application()     ← 析构时自动调用 CleanupResources()
+// 持有组件：
+//   Scene scene       → 场景状态（摄像机、帧时间、背景色）
+//   Renderer renderer → 渲染器（编排 4 个渲染通道）
 // ===================================================
 
 class Application

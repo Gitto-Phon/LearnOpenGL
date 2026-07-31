@@ -7,8 +7,14 @@ class Shader;
 class Vertexs;
 
 // ===================================================
-// LightPass - 渲染灯光颜色（点光源方块）
-// 从原 Application.cpp 的灯光模型渲染代码迁移（当前注释状态）
+// 【Step03.4】LightPass - 灯光立方体渲染通道
+// 职责：绘制点光源方块（可视化光源位置）
+//       被 Renderer::Render() 调用（当前注释状态）
+// 执行：
+//   Step03.4  对每个点光源位置，绘制一个小立方体
+// 依赖：
+//   着色器：shader_LightMesh（lightMeshVS + lightMeshFS）
+//   几何体：cubeV（立方体）
 // ===================================================
 
 class LightPass : public RenderPass

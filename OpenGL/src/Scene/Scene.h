@@ -4,8 +4,12 @@
 #include "Camera.h"
 
 // ===================================================
-// Scene - 存储场景状态（相机、帧时间、背景色等）
-// 从原 Application.cpp/h 迁移
+// [数据模块] Scene - 场景状态容器
+// 职责：持有场景级别的运行时数据，被 Application 和 Renderer 共同访问
+// 持有：
+//   Camera camera       → 摄像机（位置/视角/投影矩阵）
+//   backGroundColor     → 背景色（可由 DebugUI 动态修改）
+//   deltaTime / lastFrame → 帧时间（用于摄像机平滑移动）
 // ===================================================
 
 class Scene

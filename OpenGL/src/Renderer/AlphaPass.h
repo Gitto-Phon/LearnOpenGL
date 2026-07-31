@@ -11,8 +11,14 @@ class Vertexs;
 class Camera;
 
 // ===================================================
-// AlphaPass - 渲染需要AlphaTest和AlphaBlend的片段（植被/窗户）
-// 从原 Application.cpp 的 alpha 渲染代码迁移（当前注释状态）
+// 【Step03.3】AlphaPass - Alpha 混合/透明度渲染通道
+// 职责：按距离排序绘制透明窗户（远处→近处）
+//       被 Renderer::Render() 调用（当前注释状态）
+// 执行：
+//   Step03.3  从远到近逐个绘制透明窗户，使用 Alpha 混合
+// 依赖：
+//   着色器：shader_AlphaTest（alphaVS + alphaFS）
+//   几何体：alphaV（窗户顶点）、planV（平面）、cubeV（立方体）
 // ===================================================
 
 class AlphaPass : public RenderPass

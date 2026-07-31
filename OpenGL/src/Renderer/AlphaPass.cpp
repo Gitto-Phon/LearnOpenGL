@@ -1,5 +1,12 @@
 #include "AlphaPass.h"
 
+// ===================================================
+// 【Step03.3】AlphaPass.cpp - Alpha 混合/透明度渲染通道实现
+// 职责：按距离排序绘制透明窗户（远处→近处）
+// 执行：
+//   Step03.3  从远到近逐个绘制透明窗户，使用 Alpha 混合
+// ===================================================
+
 #include <glad/glad.h>
 #include "Shader/shader.h"
 #include "Resource/VertexArray.h"

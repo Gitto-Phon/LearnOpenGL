@@ -1,8 +1,14 @@
 #pragma once
 
 // Camera.h - 摄像机
-// 从原 src/camera.h 移入
-// 职责：FPS 摄像机控制（WASD + 鼠标 + 滚轮），提供 view/projection 矩阵
+// [数据模块] - 被 Scene 持有，由 Application 和 Renderer 通过 Scene 访问
+// 职责：管理摄像机位置、视角、投影矩阵、输入处理
+// 核心接口：
+//   processInput()      ← 处理 WASD 键盘输入，移动摄像机（Step02.3b 调用）
+//   mouse_callback()    ← 处理鼠标移动，旋转视角（GLFW 回调）
+//   scroll_callback()   ← 处理鼠标滚轮，缩放/调整 FOV（GLFW 回调）
+//   getViewMat()        ← 获取观察矩阵（view）
+//   getProjectionMat()  ← 获取透视投影矩阵（proj）
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

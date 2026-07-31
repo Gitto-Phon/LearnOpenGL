@@ -1,8 +1,15 @@
 #include "Core/Application.h"
 
 // ===================================================
-// main - 程序入口
-// 从原 Application.cpp 的 main() 迁移
+// 【Step01】程序入口 - main.cpp
+// 职责：创建 Application 对象，串联整个程序生命周期
+//       窗口初始化 → 资源加载 → 主循环 → 自动清理
+// 执行顺序：
+//   Step01.1  Application app          ← 构造 Application（注册单例）
+//   Step01.2  app.InitWindow()        ← 跳转 Step02 - 创建窗口+OpenGL环境
+//   Step01.3  app.InitResources()     ← 跳转 Step02 - 加载着色器/VAO/贴图
+//   Step01.4  app.Run()               ← 跳转 Step02 - 进入主渲染循环
+//   Step01.5  ~Application()          ← 跳出作用域自动析构，清理所有资源
 // ===================================================
 
 int main()

@@ -9,7 +9,7 @@
 // ===================================================
 
 #include <glad/glad.h>
-#include "Shader/shader.h"
+#include "Resource/Shader.h"
 #include "Resource/VertexArray.h"
 #include "Resource/Model.h"
 

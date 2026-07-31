@@ -33,7 +33,6 @@ set(SOURCES
     OpenGL/src/Util/PathManager.cpp
     # Dependencies
     OpenGL/src/glad.c
-    OpenGL/Shader/shader.cpp
     OpenGL/image/stb_image.cpp
     OpenGL/imgui/imgui.cpp
     OpenGL/imgui/imgui_demo.cpp

@@ -5,7 +5,7 @@
 
 #include "Scene/Scene.h"
 #include "Renderer/Renderer.h"
-#include "Shader/shader.h"
+#include "Resource/Shader.h"
 #include "Resource/VertexArray.h"
 
 // ===================================================

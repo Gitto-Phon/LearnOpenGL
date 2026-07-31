@@ -19,7 +19,7 @@
 #include "Renderer/ModelPass.h"
 #include "Renderer/LightPass.h"
 #include "Renderer/AlphaPass.h"
-#include "Shader/shader.h"
+#include "Resource/Shader.h"
 #include "Resource/VertexArray.h"
 #include "Scene/Camera.h"
 

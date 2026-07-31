@@ -7,7 +7,7 @@
 
 #include <vector>
 #include <string>
-#include "Shader/shader.h"
+#include "Resource/Shader.h"
 
 //定义顶点数据结构体（包含顶点位置，法线，uv坐标）
 struct Vertex {

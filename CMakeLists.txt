@@ -32,22 +32,23 @@ set(SOURCES
     # Util
     OpenGL/src/Util/PathManager.cpp
     # Dependencies
-    OpenGL/src/glad.c
-    OpenGL/image/stb_image.cpp
-    OpenGL/imgui/imgui.cpp
-    OpenGL/imgui/imgui_demo.cpp
-    OpenGL/imgui/imgui_draw.cpp
-    OpenGL/imgui/imgui_impl_glfw.cpp
-    OpenGL/imgui/imgui_impl_opengl3.cpp
-    OpenGL/imgui/imgui_tables.cpp
-    OpenGL/imgui/imgui_widgets.cpp
+    OpenGL/vendor/glad/glad.c
+    OpenGL/vendor/stb_image/stb_image.cpp
+    OpenGL/vendor/imgui/imgui.cpp
+    OpenGL/vendor/imgui/imgui_demo.cpp
+    OpenGL/vendor/imgui/imgui_draw.cpp
+    OpenGL/vendor/imgui/imgui_impl_glfw.cpp
+    OpenGL/vendor/imgui/imgui_impl_opengl3.cpp
+    OpenGL/vendor/imgui/imgui_tables.cpp
+    OpenGL/vendor/imgui/imgui_widgets.cpp
 )
 
 # ============ 头文件目录 ============
 include_directories(
     ${CMAKE_SOURCE_DIR}/OpenGL
     ${CMAKE_SOURCE_DIR}/OpenGL/src
-    ${CMAKE_SOURCE_DIR}/OpenGL/imgui
+    ${CMAKE_SOURCE_DIR}/OpenGL/vendor/imgui
+    ${CMAKE_SOURCE_DIR}/OpenGL/vendor/stb_image
     ${CMAKE_SOURCE_DIR}/Dependencies
     ${CMAKE_SOURCE_DIR}/Dependencies/GLFW/include
     ${CMAKE_SOURCE_DIR}/Dependencies/GLAD/include

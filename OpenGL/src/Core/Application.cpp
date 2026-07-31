@@ -3,9 +3,9 @@
 #include <iostream>
 
 // ImGui
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_impl_opengl3.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 // 资源
 #include "Resource/GeometryFactory.h"
@@ -187,26 +187,26 @@ void Application::InitResources()
 {
     // GLSL文件路径
     // 灯光
-    const char* lightVS     = "GLSL/lightVS.glsl";
-    const char* lightFS     = "GLSL/lightFS.glsl";
+    const char* lightVS     = "assets/GLSL/lightVS.glsl";
+    const char* lightFS     = "assets/GLSL/lightFS.glsl";
     // 灯光模型
-    const char* lightMeshVS = "GLSL/lightMeshVS.glsl";
-    const char* lightMeshFS = "GLSL/lightMeshFS.glsl";
+    const char* lightMeshVS = "assets/GLSL/lightMeshVS.glsl";
+    const char* lightMeshFS = "assets/GLSL/lightMeshFS.glsl";
     // 模型
-    const char* modelVS     = "GLSL/modelVS.glsl";
-    const char* modelFS     = "GLSL/modelFS.glsl";
+    const char* modelVS     = "assets/GLSL/modelVS.glsl";
+    const char* modelFS     = "assets/GLSL/modelFS.glsl";
     // 深度
-    const char* depthVS     = "GLSL/depthVS.glsl";
-    const char* depthFS     = "GLSL/depthFS.glsl";
+    const char* depthVS     = "assets/GLSL/depthVS.glsl";
+    const char* depthFS     = "assets/GLSL/depthFS.glsl";
     // 模板
-    const char* stencilVS   = "GLSL/stencilVS.glsl";
-    const char* stencilFS   = "GLSL/stencilFS.glsl";
+    const char* stencilVS   = "assets/GLSL/stencilVS.glsl";
+    const char* stencilFS   = "assets/GLSL/stencilFS.glsl";
     // alpha
-    const char* alphaVS     = "GLSL/alphaVS.glsl";
-    const char* alphaFS     = "GLSL/alphaFS.glsl";
+    const char* alphaVS     = "assets/GLSL/alphaVS.glsl";
+    const char* alphaFS     = "assets/GLSL/alphaFS.glsl";
     // post
-    const char* rtVS        = "GLSL/rtVS.glsl";
-    const char* rtFS        = "GLSL/rtFS.glsl";
+    const char* rtVS        = "assets/GLSL/rtVS.glsl";
+    const char* rtFS        = "assets/GLSL/rtFS.glsl";
 
     // 加载编译着色器
     shader_Model        = new Shader(modelVS, modelFS);             // 定义模型着色器
@@ -217,7 +217,7 @@ void Application::InitResources()
     shader_AlphaTest    = new Shader(alphaVS, alphaFS);             // Alpha测试着色器
     shader_RenderTarget = new Shader(rtVS, rtFS);                   // 帧缓冲着色器
 
-    //Model model("model/backpack/backpack.obj");//从文件读取模型
+    //Model model("assets/model/backpack/backpack.obj");//从文件读取模型
 
     // 创建顶点对象
     //Vertexs vertexs(vertices, sizeof(vertices), idex, idexSize);//创建、绑定缓冲//载入数据
@@ -226,9 +226,9 @@ void Application::InitResources()
     alphaV = new Vertexs(Resource::alphaVertices, Resource::alphaVerticesSize, Resource::idexs, 2);
 
     // 加载贴图
-    cubeTexture  = setTexture("Texture/wall.jpg",                        0, true,  GL_RGB);
-    floorTexture = setTexture("Texture/container.jpg",                   0, true,  GL_RGB);
-    alpheTexture = setTexture("Texture/blending_transparent_window.png", 0, false, GL_RGBA);
+    cubeTexture  = setTexture("assets/Texture/wall.jpg",                        0, true,  GL_RGB);
+    floorTexture = setTexture("assets/Texture/container.jpg",                   0, true,  GL_RGB);
+    alpheTexture = setTexture("assets/Texture/blending_transparent_window.png", 0, false, GL_RGBA);
 
     //------------------------------------- UI -----------------------------------
 #pragma region

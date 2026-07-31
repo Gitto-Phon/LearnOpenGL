@@ -3,8 +3,8 @@
 namespace Util
 {
 
-const char* PathManager::GetShaderPath()  { return "GLSL/"; }
-const char* PathManager::GetTexturePath() { return "Texture/"; }
-const char* PathManager::GetModelPath()   { return "model/"; }
+const char* PathManager::GetShaderPath()  { return "assets/GLSL/"; }
+const char* PathManager::GetTexturePath() { return "assets/Texture/"; }
+const char* PathManager::GetModelPath()   { return "assets/model/"; }
 
 } // namespace Util

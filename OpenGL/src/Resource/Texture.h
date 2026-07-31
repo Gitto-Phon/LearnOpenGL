@@ -8,7 +8,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "image/stb_image.h"//图片加载
+#include "stb_image.h"//图片加载
 
 //纹理路径,纹理ID,Y轴翻转,纹理类型
 inline unsigned int setTexture(const char* texPath, unsigned int id, bool flip, GLint param)

@@ -13,7 +13,7 @@
 #include <vector>
 
 #include "Mesh.h"
-#include "image/stb_image.h"
+#include "stb_image.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
